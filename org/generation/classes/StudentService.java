@@ -22,16 +22,16 @@ public class StudentService{
 
     public void enrollStudents( String courseName, String studentID ) 
     		throws CourseNotFoundException,StudentNotFoundException{
-        Course course = courseList.get( courseName );
-        Student student = students.get(studentID);
         
-        if(course == null) {
+        if(! courseList.containsKey(courseName)) {
         	throw new CourseNotFoundException("Curso "+courseName+" no existe");
         }
         
-        if(student == null) {
+        if(! students.containsKey(studentID)) {
         	throw new StudentNotFoundException("Alumno "+studentID+" no existe");
         }
+        
+        Course course = courseList.get( courseName );
 
         if ( !coursesEnrolledByStudents.containsKey( studentID ) ){
             coursesEnrolledByStudents.put( studentID, new ArrayList<>() );
@@ -39,9 +39,19 @@ public class StudentService{
         coursesEnrolledByStudents.get( studentID ).add( course );
     }
 
-    public void unEnrollStudents( String courseName, String studentID ){
+    public void unEnrollStudents( String courseName, String studentID )
+    		throws CourseNotFoundException,StudentNotFoundException{
         Course course = courseList.get( courseName );
 
+        	
+        if(! courseList.containsKey(courseName)) {
+        	throw new CourseNotFoundException("Curso "+courseName+" no existe");
+        }
+        
+        if(! students.containsKey(studentID)) {
+        	throw new StudentNotFoundException("Alumno "+studentID+" no existe");
+        }
+        
         if ( coursesEnrolledByStudents.containsKey( studentID ) ){
             coursesEnrolledByStudents.get( studentID ).remove( course );
         }
@@ -50,10 +60,16 @@ public class StudentService{
     }
 
     public void showEnrolledStudents(String courseId){
-        Course curso = courseList.get(courseId);
+        Course course = courseList.get(courseId);
         
-        if(curso == null) {
-        	System.out.println("El curso "+courseId+" no existe");
+        for(String studentId : coursesEnrolledByStudents.keySet()) {
+        	System.out.println(studentId);
+        	List<Course> allCourses = coursesEnrolledByStudents.get(studentId);
+        	
+        	if(allCourses.contains(course)) {
+        		Student student = students.get(studentId);
+        		System.out.println(student);
+        	}
         }
     }
 
@@ -64,7 +80,9 @@ public class StudentService{
 		}
     }
     public void addStudent(Student student) {
-    	students.put(student.getId(), student);
+    	if(! students.containsKey(student.getId())) {
+        	students.put(student.getId(), student);    		
+    	}
     }
     
 }
