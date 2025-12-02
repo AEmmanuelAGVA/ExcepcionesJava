@@ -1,11 +1,8 @@
 package org.generation.exceptions;
 
-public class StudentNotFoundException
-extends Exception
-{
+public class StudentNotFoundException extends Exception{
 
-public StudentNotFoundException( )
-{
-    super( "Student not found!" );
-}
+	public StudentNotFoundException( ){
+	    super( "Student not found!" );
+	}
 }

@@ -1,10 +1,8 @@
 package org.generation.exceptions;
 
-public class CourseNotFoundException extends Exception
-{
+public class CourseNotFoundException extends Exception{
 
-    public CourseNotFoundException()
-    {
+    public CourseNotFoundException(){
         super("course not found!!");
     }
 }

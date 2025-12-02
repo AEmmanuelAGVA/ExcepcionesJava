@@ -6,13 +6,10 @@ import java.util.List;
 
 public class Student
 {
-    public String name;
-
-    public String id;
-
-    public int age;
-
-    public final List<Course> courseList = new ArrayList<>();
+    private String name;
+    private String id;
+    private int age;
+    private final List<Course> courseList = new ArrayList<>();
 
     public Student( String name, String id, int age)
     {
@@ -20,4 +17,33 @@ public class Student
         this.id = id;
         this.age = age;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public List<Course> getCourseList() {
+		return courseList;
+	}
+    
 }
