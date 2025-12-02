@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.generation.exceptions.CourseNotFoundException;
+import org.generation.exceptions.StudentNotFoundException;
+
 public class StudentService{
     private HashMap<String, Course> courseList = new HashMap<>();
     private HashMap<String, Student> students = new HashMap<>();
@@ -17,8 +20,18 @@ public class StudentService{
         courseList.put( "Biology", new Course( "Biology", 10, "Charles Darwin" ) );
     }
 
-    public void enrollStudents( String courseName, String studentID ){
+    public void enrollStudents( String courseName, String studentID ) 
+    		throws CourseNotFoundException,StudentNotFoundException{
         Course course = courseList.get( courseName );
+        Student student = students.get(studentID);
+        
+        if(course == null) {
+        	throw new CourseNotFoundException("Curso "+courseName+" no existe");
+        }
+        
+        if(student == null) {
+        	throw new StudentNotFoundException("Alumno "+studentID+" no existe");
+        }
 
         if ( !coursesEnrolledByStudents.containsKey( studentID ) ){
             coursesEnrolledByStudents.put( studentID, new ArrayList<>() );
@@ -32,16 +45,26 @@ public class StudentService{
         if ( coursesEnrolledByStudents.containsKey( studentID ) ){
             coursesEnrolledByStudents.get( studentID ).remove( course );
         }
+        
+        
     }
 
     public void showEnrolledStudents(String courseId){
-        //TODO implement using collections loops
+        Course curso = courseList.get(courseId);
+        
+        if(curso == null) {
+        	System.out.println("El curso "+courseId+" no existe");
+        }
     }
 
     public void showAllCourses(){
-        //TODO implement using collections loops
+        for (Course course : courseList.values()) {
+			System.out.println("Curso: "+ course.getName()+", Créditos: "+course.getCredits()+
+					", Profesor: "+course.getProfessorName());
+		}
     }
     public void addStudent(Student student) {
     	students.put(student.getId(), student);
     }
+    
 }
